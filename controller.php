@@ -35,7 +35,7 @@ class Controller extends Package
      *
      * @var string
      */
-    protected $pkgVersion = '0.0.6';
+    protected $pkgVersion = '0.0.12';
 
     /**
      * @see https://documentation.concretecms.org/developers/packages/adding-custom-code-to-packages
@@ -111,9 +111,10 @@ class Controller extends Package
         }
 
         $page = Page::getByPath('/dashboard/products');
-        if (!$page || $page->isError()) {
+        $shindanPage = Page::getByPath('/shindan');
+        // if (!$shindanPage || !$ || !$page || $page->isError()) {
             $this->installContentFile('install/singlepages.xml');
-        }
+        // }
 
         $theme = Theme::getByHandle('theme_boilerplate');
         if (!$theme) {

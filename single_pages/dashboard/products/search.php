@@ -20,7 +20,6 @@ if ($pagination) {
             <?php
             /** @var \Macareux\Boilerplate\Entity\Product $product */
             foreach ($pagination->getCurrentPageResults() as $product) {
-                var_export($product);
                 ?>
                 <tr>
                     <td><?= h($product->getId()) ?></td>
