@@ -1,9 +1,21 @@
 <?xml version="1.0"?>
 <concrete5-cif version="1.0">
     <singlepages>
-        <page name="診断"
+        <page name="診断TOP"
               path="/shindan"
               filename="/shindan.php"
+              pagetype=""
+              description=""
+              package="v9_package_boilerplate"/>
+        <page name="診断回答"
+              path="/shindan/answer"
+              filename="/shindan/answer.php"
+              pagetype=""
+              description=""
+              package="v9_package_boilerplate"/>
+        <page name="診断結果"
+              path="/shindan/result"
+              filename="/shindan/result.php"
               pagetype=""
               description=""
               package="v9_package_boilerplate"/>

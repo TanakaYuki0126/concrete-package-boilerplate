@@ -13,5 +13,9 @@ class Shindan extends PageController
       $contents = $view->render();
       return new Response($contents, 200);
     }
+
+    public function start_shindan(){
+      return $this->buildRedirect('/shindan/answer');
+    }
 }
 

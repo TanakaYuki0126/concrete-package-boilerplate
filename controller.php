@@ -35,7 +35,7 @@ class Controller extends Package
      *
      * @var string
      */
-    protected $pkgVersion = '0.0.12';
+    protected $pkgVersion = '0.0.13';
 
     /**
      * @see https://documentation.concretecms.org/developers/packages/adding-custom-code-to-packages
