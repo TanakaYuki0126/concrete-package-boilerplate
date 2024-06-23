@@ -7,15 +7,12 @@ use Concrete\Core\Page\Controller\PageController;
 
 class Shindan extends PageController
 {
-    public function view()
-    {
-      $view = $this->getViewObject();
-      $contents = $view->render();
-      return new Response($contents, 200);
-    }
+  public function view()
+  {
+  }
 
-    public function start_shindan(){
-      return $this->buildRedirect('/shindan/answer');
-    }
+  public function start_shindan()
+  {
+    return $this->buildRedirect('/shindan/answer');
+  }
 }
-

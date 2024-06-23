@@ -7,6 +7,7 @@ use Concrete\Core\Url\Resolver\Manager\ResolverManagerInterface;
 
 class Shindan extends DashboardPageController
 {
+    // /dashboard/shindanにアクセスした時にここに来てなさそう
     public function view()
     {
         /** @var ResolverManagerInterface $resolver */
