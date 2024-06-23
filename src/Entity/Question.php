@@ -2,6 +2,7 @@
 
 namespace Macareux\Boilerplate\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -21,35 +22,36 @@ class Question
 
     /**
      * @var string
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
-    private $content;
+    private $content = null;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"default": 1})
      */
     private $disp_order;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"default": 1})
      */
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity=Option::class)
+     * @ORM\OneToMany(targetEntity=Option::class, mappedBy="question", cascade={"persist"}, orphanRemoval=true)
      */
-    private Collection $options;
+    private ?Collection $options = null;
 
     /**
-     * @param string $content
+     * @param integer $disp_order
+     * @param integer $type
      */
-    public function __construct(string $content, int $disp_order, int $type)
+    public function __construct(int $disp_order, int $type)
     {
-        $this->content = $content;
         $this->disp_order = $disp_order;
         $this->type = $type;
+        $this->options = new ArrayCollection();
     }
 
     /**
@@ -69,21 +71,7 @@ class Question
     {
         $this->disp_order = $disp_order;
     }
-    /**
-     * @return string
-     */
-    public function getContent(): string
-    {
-        return $this->content;
-    }
 
-    /**
-     * @param string $name
-     */
-    public function setContent(string $content): void
-    {
-        $this->content = $content;
-    }
 
     public function setType(int $type): void
     {
@@ -95,7 +83,7 @@ class Question
         return $this->type;
     }
 
-    public function  getOptions(): Collection
+    public function  getOptions(): ?Collection
     {
         return $this->options;
     }
@@ -104,7 +92,17 @@ class Question
     {
         if (!$this->options->contains($option)) {
             $option->setQuestion($this);
-            $this->options->add($option);
+            $this->options[] = $option;
         }
+    }
+
+    public function getContent(): string
+    {
+        return $this->content;
+    }
+
+    public function setContent(string $content): void
+    {
+        $this->content = $content;
     }
 }

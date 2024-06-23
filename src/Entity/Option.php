@@ -32,6 +32,7 @@ class Option
 
     /**
      * @ORM\ManyToOne(targetEntity=Question::class, inversedBy="options")
+     * @ORM\JoinColumn(name="question_id", referencedColumnName="id", nullable=true)
      */
     private $question;
 
@@ -69,5 +70,10 @@ class Option
     public function setQuestion(Question $question): void
     {
         $this->question = $question;
+    }
+
+    public function getQuestion(): ?Question
+    {
+        return $this->question;
     }
 }

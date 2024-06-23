@@ -58,16 +58,4 @@ class QuestionList extends EntityItemList implements PaginationProviderInterface
     {
         return new QueryAdapter($this->deliverQueryObject());
     }
-
-    /**
-     * @param string $keywords
-     *
-     * @return void
-     */
-    public function filterByKeywords(string $keywords)
-    {
-        $this->query->andWhere($this->query->expr()->like('q.content', ':keywords'))
-            ->setParameter('keywords', '%' . $keywords . '%')
-        ;
-    }
 }
