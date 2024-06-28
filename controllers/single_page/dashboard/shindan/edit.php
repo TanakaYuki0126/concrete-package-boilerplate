@@ -16,7 +16,7 @@ class Edit extends DashboardPageController
   {
     /** @var QuestionList $list */
     $list = $this->app->make(QuestionList::class);
-    $list->sortBy('q.id', 'desc');
+    $list->sortBy('p.disp_order', 'asc');
     $count = $list->getTotalResults();
     $question = $this->getEntity($count);
     $questionList = $this->getQuestionList();
@@ -44,32 +44,42 @@ class Edit extends DashboardPageController
     }
     $this->entityManager->persist($question);
     $this->entityManager->flush();
-    $this->flash('success', $this->entityManager->getUnitOfWork()->size());
+    $this->flash('success', t('Question added successfully'));
     return $this->buildRedirect('/dashboard/shindan/edit');
   }
 
   //質問の編集
   public function submit_edit($id)
   {
-    $content = $this->get("content-{$id}");
+    $dispOrder = $this->get("disp_order-{$id}");
+    $type = $this->get("type-{$id}");
     $question = $this->getEntity((int) $id);
+    $question->setDispOrder($dispOrder);
+    $question->setType($type);
+    $options = $question->getOptions();
+    $debug = "";
+    foreach ($options as $option) {
+      $optionId = $option->getId();
+      $content = $this->get("option-{$optionId}");
+      $pointId = $this->get("point_id-{$optionId}");
+      $debug .= $content . ", " . $pointId . "<br>";
+      $option->setContent($content);
+      $option->setPointId($pointId);
+      $this->entityManager->persist($option);
+    }
     $this->entityManager->persist($question);
     $this->entityManager->flush();
-    $this->flash('success', "$content, $id");
+    $this->flash('success', t('Question updated successfully'));
     return $this->buildRedirect('/dashboard/shindan/edit');
   }
 
   //削除
   public function delete($id)
   {
-    //質問に紐づく選択肢の削除
-    // $deleteOptions = $this->getOptionEntityByQuestionId($id);
-    // foreach ($deleteOptions as $option) {
-    //   $this->entityManager->remove($option);
-    // }
     $question = $this->getEntity($id);
     $this->entityManager->remove($question);
     $this->entityManager->flush();
+    $this->flash('success', t('Question deleted successfully'));
     return $this->buildRedirect('/dashboard/shindan/edit');
   }
 

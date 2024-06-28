@@ -20,6 +20,7 @@ foreach ($questionList as $item) {
   /** @var \Macareux\Boilerplate\Entity\Question $item */
   $id = $item->getId();
   $order = $item->getDispOrder();
+  $type = $item->getType();
   $options = $item->getOptions();
 ?>
   <div class="px-5 py-2">
@@ -28,20 +29,22 @@ foreach ($questionList as $item) {
         <p class="text-secondary fw-bold">質問<?= $id ?>: </p>
         <?= $form->label("disp_order-{$id}", "表示順") ?>
         <?= $form->number("disp_order-{$id}", $order, ['placeholder' => "表示順を入力"]) ?>
+        <?= $form->label("type-{$id}", "診断タイプ") ?>
+        <?= $form->select("type-{$id}", ['1' => 'エニアグラム', '2' => 'ウェルスダイナミクス'], $type) ?>
         <?php
         foreach ($options as $index => $option) {
           /** @var \Macareux\Boilerplate\Entity\Option $option */
           $optionId = $option->getId();
           $optionContent = $option->getContent();
           $pointId = $option->getPointId();
+          $index++;
         ?>
           <div class="d-flex">
             <div class="flex-grow-1">
-
-              <?= $form->label("content-{$optionId}", "選択肢{$index}") ?>
-              <?= $form->text('option', $optionContent, ['placeholder' => "選択肢を入力"]) ?>
+              <?= $form->label("option-{$optionId}", "選択肢{$index}") ?>
+              <?= $form->text("option-{$optionId}", $optionContent, ['placeholder' => "選択肢を入力"]) ?>
             </div>
-            <div>
+            <div class="justify-end">
               <?= $form->label("point_id-{$optionId}", "加点対象") ?>
               <?= $form->number("point_id-{$optionId}", $pointId, ['placeholder' => "加点対象を入力"]) ?>
             </div>
@@ -50,7 +53,7 @@ foreach ($questionList as $item) {
         }
         ?>
         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-question-<?= $id ?>">削除</button>
-        <?= $form->submit('save', 'save', ['class' => 'btn btn-primary']); ?>
+        <?= $form->submit('save', '更新', ['class' => 'btn btn-primary']); ?>
       </form>
     </div>
     <form method="post" action="<?= $view->action('delete', $id) ?>">
