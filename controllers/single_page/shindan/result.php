@@ -13,7 +13,6 @@ class Result extends PageController
 {
   public function view($type = null)
   {
-    $this->flash('success', $type);
-    $this->set('result', "くまさん");
+    $this->set('result', $type);
   }
 }

@@ -4,6 +4,7 @@ namespace Concrete\Package\V9PackageBoilerplate\Controller\SinglePage\Shindan;
 
 use Concrete\Core\Page\Controller\PageController;
 use Doctrine\ORM\EntityManagerInterface;
+use Macareux\Boilerplate\Entity\Option;
 use Macareux\Boilerplate\Entity\Question;
 
 class Answer extends PageController
@@ -40,18 +41,23 @@ class Answer extends PageController
    */
   public function to_result()
   {
-    $result = [];
+    //ポイントを加算していく配列
+    $pointArray1 = array_fill(0, 9, 0);
     /** @var \Macareux\Boilerplate\Entity\Question $q */
     foreach ($this->questionList as $q) {
       $id = $q->getId();
       //それぞれの質問に対するユーザーの選択を取得
-      $userSelect = $this->get("select-{$id}");
-      if ($userSelect) {
-        $result[] = ['id' => $id, 'select' => $userSelect];
+      $selectedOptionId = $this->get("select-{$id}");
+      if ($selectedOptionId) {
+        /** @var \Macareux\Boilerplate\Entity\Option $option */
+        $option = $this->getOptionEntity($selectedOptionId);
+        $point  = $option->getPointId();
+        $pointArray1[$point - 1]++;
       }
     }
-    $this->flash('success', json_encode($result));
-    $type = 1;
+    //ポイントの配列の最大値が診断結果のIDになる
+    //pointArr配列の最大値を$typeに代入
+    $type = array_keys($pointArray1, max($pointArray1))[0] + 1;
     return $this->buildRedirect("/shindan/result/{$type}");
   }
 
@@ -62,5 +68,11 @@ class Answer extends PageController
   {
     $repository = $this->entityManager->getRepository(Question::class);
     return $repository->findAll();
+  }
+
+  protected function getOptionEntity($id)
+  {
+    $repository = $this->entityManager->getRepository(Option::class);
+    return $repository->find($id);
   }
 }

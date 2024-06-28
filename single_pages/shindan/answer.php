@@ -16,17 +16,23 @@ defined('C5_EXECUTE') or die('Access Denied.');
       $i = 0;
       foreach ($questionList as $q) {
         $id = $q->getId();
-        $content = $q->getContent();
         $i++;
       ?>
         <div>
           <h5>質問<?= $i ?></h5>
-          <?= $content ?>
           <div class="d-flex gap-1">
-            <?= $form->radio("select-{$id}", 'A') ?>
-            <?= $form->label("select-{$id}-a", "A") ?>
-            <?= $form->radio("select-{$id}", 'B') ?>
-            <?= $form->label("select-{$id}-b", "B") ?>
+            <?php
+            $options = $q->getOptions();
+            foreach ($options as $option) {
+              /** @var \Macareux\Boilerplate\Entity\Option $option */
+              $optionId = $option->getId();
+              $content = $option->getContent();
+            ?>
+              <?= $form->radio("select-{$id}", $optionId) ?>
+              <?= $form->label("select-{$id}", $content) ?>
+            <?php
+            }
+            ?>
           </div>
         </div>
       <?php
