@@ -37,13 +37,14 @@ class Edit extends DashboardPageController
     $type = $this->get('type');
     $disp_order = $this->get('disp_order');
     $question = new Question($disp_order, $type);
-    $this->flash('success', $question->getDispOrder());
     foreach ($contentArr as $index => $content) {
       $option = new Option((string) $content, (int) $pointIdArr[$index]);
       $question->addOption($option);
+      $this->entityManager->persist($option);
     }
     $this->entityManager->persist($question);
     $this->entityManager->flush();
+    $this->flash('success', $this->entityManager->getUnitOfWork()->size());
     return $this->buildRedirect('/dashboard/shindan/edit');
   }
 

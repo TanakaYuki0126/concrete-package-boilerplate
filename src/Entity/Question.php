@@ -92,7 +92,7 @@ class Question
     {
         if (!$this->options->contains($option)) {
             $option->setQuestion($this);
-            $this->options[] = $option;
+            $this->options->add($option);
         }
     }
 
