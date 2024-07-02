@@ -31,6 +31,12 @@
               pagetype=""
               description=""
               package="v9_package_boilerplate"/>
+        <page name="同点設定"
+              path="/dashboard/shindan/tieSetting"
+              filename="/dashboard/shindan/tieSetting.php"
+              pagetype=""
+              description=""
+              package="v9_package_boilerplate"/>
         <page name="Products"
               path="/dashboard/products"
               filename="/dashboard/products/view.php"
