@@ -39,6 +39,7 @@ class Answer extends PageController
    * ユーザーの入力を取得後、診断ロジックに照らし合わせて108通りのうちの結果$typeを算出。
    * $typeをURLに入れてリダイレクト。
    */
+
   public function to_result()
   {
     // 診断の回答をもとに、各タイプに加点し、タイプを特定する
@@ -47,7 +48,7 @@ class Answer extends PageController
       // B:対象診断システムの全タイプを配列で取得する
       // Aの配列をForeachしながら、
       foreach ($answers as $key) {
-        this->addScore($);
+        $this->addScore();
       }
 
       // 一番大きな点数に該当するタイプが二つあるかどうかを判別
@@ -56,8 +57,10 @@ class Answer extends PageController
     
     // 同点ロジック
     if($isSame){
-      $resultType= $this->getTieSetting($same1,$same2)
-    };
+      $same1 = '';
+      $same2 = '';
+      $resultType= $this->getTieSetting($same1,$same2);
+    }
 
     //ポイントを加算していく配列
     $pointArray1 = array_fill(0, 9, 0);
@@ -78,6 +81,7 @@ class Answer extends PageController
     $type = array_keys($pointArray1, max($pointArray1))[0] + 1;
 
     //ユーザー属性：タイプ：
+    //ユーザー属性に診断結果タイプを登録する
 
     return $this->buildRedirect("/shindan/result/{$type}");
   }
@@ -96,4 +100,16 @@ class Answer extends PageController
     $repository = $this->entityManager->getRepository(Option::class);
     return $repository->find($id);
   }
+
+  //
+  protected function addScore()
+  {
+
+  }
+
+  //同点のタイプを引数にする
+  protected function getTieSetting()
+  {
+  }
+
 }
