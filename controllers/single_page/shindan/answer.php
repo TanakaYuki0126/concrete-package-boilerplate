@@ -41,6 +41,24 @@ class Answer extends PageController
    */
   public function to_result()
   {
+    // 診断の回答をもとに、各タイプに加点し、タイプを特定する
+      // A:問題ごとの結果を受けとる{a:1,b:2,c:3}
+      $answers = array();
+      // B:対象診断システムの全タイプを配列で取得する
+      // Aの配列をForeachしながら、
+      foreach ($answers as $key) {
+        this->addScore($);
+      }
+
+      // 一番大きな点数に該当するタイプが二つあるかどうかを判別
+      $isSame = false;
+      $resultType = '';
+    
+    // 同点ロジック
+    if($isSame){
+      $resultType= $this->getTieSetting($same1,$same2)
+    };
+
     //ポイントを加算していく配列
     $pointArray1 = array_fill(0, 9, 0);
     /** @var \Macareux\Boilerplate\Entity\Question $q */
@@ -58,6 +76,9 @@ class Answer extends PageController
     //ポイントの配列の最大値が診断結果のIDになる
     //pointArr配列の最大値を$typeに代入
     $type = array_keys($pointArray1, max($pointArray1))[0] + 1;
+
+    //ユーザー属性：タイプ：
+
     return $this->buildRedirect("/shindan/result/{$type}");
   }
 

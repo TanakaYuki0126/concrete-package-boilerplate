@@ -13,6 +13,7 @@ $name = $name ?? null;
 $price = $price ?? null;
 ?>
 <form method="post" action="<?= $view->action('submit', $id); ?>">
+    <!-- CSRF対策 -->
     <?php $token->output('save_product'); ?>
     <fieldset>
         <div class="form-group">
@@ -29,7 +30,7 @@ $price = $price ?? null;
     </fieldset>
     <div class="ccm-dashboard-form-actions-wrapper">
         <div class="ccm-dashboard-form-actions">
-            <a href="<?= UrlFacade::to('/dashboard/products/search'); ?>" class="btn btn-secondary float-start"><?=  t('Cancel'); ?></a>
+            <a href="<?= UrlFacade::to('/dashboard/products/search'); ?>" class="btn btn-secondary float-start"><?= t('Cancel'); ?></a>
             <?= $form->submit('save', t('Save'), ['class' => 'btn btn-primary float-end']); ?>
         </div>
     </div>
