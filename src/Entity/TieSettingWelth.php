@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="OptionRepository")
- * @ORM\Table(name="MacareuxTieSettingEnneagram")
+ * @ORM\Table(name="MacareuxTieSettingWelth")
  */
-class TieSettingEnneagram
+class TieSettingWelth
 {
     /**
      * @var int

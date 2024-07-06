@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="OptionRepository")
- * @ORM\Table(name="addPointWelth")
+ * @ORM\Table(name="ResultType")
  */
-class addPointWelth
+class ResultType
 {
     /**
      * @var int
